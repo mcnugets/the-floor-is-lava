@@ -1,9 +1,0 @@
-lastUpgrade=01006
-proj.pluginVersion=0.10.06
-proj.AppId=292476243771
-and.BundleId=com.namelessdev.floorlava
-proj.classDir=Assets
-proj.ConstantsClassName=GPGSIds
-and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e292476243771%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.namelessdev.floorlava%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+highest+score+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_highest_score%22+translatable%3d%22false%22%3eCgkIu57Fx8EIEAIQAg%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
-and.ClientId=
-android.SetupDone=true

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - 'column surface        '
+  - column
+  - parent of column
+  - lava
+  - starting point
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - PostProcessing
+  - ground
+  - player
+  - lava
+  - column
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background 3
+    uniqueID: 2225225155
+    locked: 0
+  - name: background 2
+    uniqueID: 1353419183
+    locked: 0
+  - name: background 1
+    uniqueID: 3161117107
+    locked: 0
+  - name: front
+    uniqueID: 3374142797
+    locked: 0
+  - name: super front
+    uniqueID: 299661661
+    locked: 0

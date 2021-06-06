@@ -94,7 +94,7 @@ public class Player : MonoBehaviour {
         {
             if (controller.jumpTimeCounter > 0)
             {
-                controller.fuckingJumpForce();
+                controller.JumpForce();
                 controller.jumpTimeCounter -= Time.deltaTime;
                 jump.SetBool("isJumping", true);
             }

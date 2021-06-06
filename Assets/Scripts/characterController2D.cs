@@ -58,7 +58,7 @@ public class characterController2D : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
         // hittopSurface(column, gameObject);
        
 
@@ -66,7 +66,7 @@ public class characterController2D : MonoBehaviour {
 
         if (isdead)
         {
-         
+            print("IS DEAD");
         }
         Debug.Log("NUMBER OF LANDING------->" + numberoflanding);
 
@@ -101,7 +101,7 @@ public class characterController2D : MonoBehaviour {
         {
                isJumping = true;
             jumpTimeCounter = JumpTime;
-            fuckingJumpForce();
+            JumpForce();
 
 
 
@@ -109,7 +109,7 @@ public class characterController2D : MonoBehaviour {
         }
 
     }
-    public void fuckingJumpForce()
+    public void JumpForce()
     {
         rigidbody2D.AddForce(transform.up * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
     }

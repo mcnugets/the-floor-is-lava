@@ -36,7 +36,6 @@ public class characterController2D : MonoBehaviour {
     public float JumpTime;
     public bool isJumping = false;
     public static bool isdead;
-    private bool alreadyDoneDat;
     private List<Collider2D> listofColliders; 
 
     public UnityEvent OnLandEvent;
@@ -51,7 +50,7 @@ public class characterController2D : MonoBehaviour {
         listofColliders = new List<Collider2D>();
         numberoflanding = 0;
         isontheground = false;
-        alreadyDoneDat = false;
+        
 
       
         topColumn = false;
@@ -67,7 +66,7 @@ public class characterController2D : MonoBehaviour {
 
         if (isdead)
         {
-            Debug.Log("NIGGA, HE DEAD");
+         
         }
         Debug.Log("NUMBER OF LANDING------->" + numberoflanding);
 

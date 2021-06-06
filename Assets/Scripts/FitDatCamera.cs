@@ -39,7 +39,8 @@ public class FitDatCamera : MonoBehaviour {
     {
         StartCoroutine(fadethepanelaway());
     }
-    void Start () {
+    void Start()
+    {
         sm = GameObject.Find("GameManager").GetComponent<scoremanager>();
 
 
@@ -63,7 +64,7 @@ public class FitDatCamera : MonoBehaviour {
         finalstate.a = 0.0f;
         darkscreen.color = fadeblackaway;
 
-        
+
 
 
         Screen.autorotateToLandscapeLeft = false;
@@ -71,17 +72,17 @@ public class FitDatCamera : MonoBehaviour {
         Screen.orientation = ScreenOrientation.Portrait;
 
         //google play service code
-       
+
         //  ADD THIS CODE BETWEEN THESE COMMENTS
 
         // Create client configuration
-        PlayGamesClientConfiguration config = new 
+        PlayGamesClientConfiguration config = new
             PlayGamesClientConfiguration.Builder()
             .Build();
 
         // Enable debugging output (recommended)
         PlayGamesPlatform.DebugLogEnabled = true;
-        
+
         // Initialize and activate the platform
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
@@ -89,7 +90,7 @@ public class FitDatCamera : MonoBehaviour {
 
         SignInOnStart();
 
-
+        
 
     }
 
@@ -202,9 +203,13 @@ public class FitDatCamera : MonoBehaviour {
     {
         StartCoroutine(changeopacity());
     }
-	// Update is called once per frame
-	void Update () {
 
+    
+    /// <summary>
+    ///  Starts a game
+    /// </summary>
+    private void Initialized()
+    {
         leaderboardButton.SetActive(Social.localUser.authenticated);
 
 
@@ -213,16 +218,13 @@ public class FitDatCamera : MonoBehaviour {
 
         if (gamestarted)
         {
-
+            //check if player is dead
             if (!Player.isDead())
             {
-                if (!instruction.gameObject.active)
+                if (!instruction.gameObject.activeInHierarchy)
                 {
-
-
                     sm.scoreCounter.gameObject.SetActive(true);
 
-                    // Debug.Log("PROVERKA" + numberofjumps.gameObject.active);
                 }
 
 
@@ -240,11 +242,10 @@ public class FitDatCamera : MonoBehaviour {
             fadethetextin();
             if (Input.GetMouseButtonDown(0))
             {
-                
+
                 wasScreenTapped = true;
             }
 
-       
 
             if (wasScreenTapped)
             {
@@ -253,18 +254,18 @@ public class FitDatCamera : MonoBehaviour {
 
                 anim.SetBool("game started", true);
 
-              
-
             }
 
-
-           
-
-
         }
-      
+    }
 
 
+
+
+    // Update is called once per frame
+    void Update () 
+    {
+        Initialized();
 
     }
 }

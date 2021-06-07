@@ -5,13 +5,16 @@ using UnityEngine.UI;
 
 public class scoremanager : MonoBehaviour {
 
+    private static int lastscorerecorded;
+    public static bool isDead;
+
     public Text scoreCounter;
     public Text highestScore;
     public  List<GameObject> gameoverUI;
     public characterController2D charactercontroller;
-    private static int lastscorerecorded;
+    
     float elaspedTime = 0;
-    private List<RectTransform> testing;
+   
     float timer = 1f;
     public static bool gameover;
     
@@ -19,34 +22,28 @@ public class scoremanager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         gameover = false;
-        testing = new List<RectTransform>();
-        // testing = gameoverUI.GetComponent<RectTransform>();
-        for (int suka = 0; suka < gameoverUI.Count; suka++)
-        {
-            testing.Add(gameoverUI[suka].GetComponent<RectTransform>());
-        }
+        isDead = false;
+
     }
 
   
     // Update is called once per frame
     void Update () {
-        scoreCounter.text = characterController2D.numberoflanding.ToString();
-       
-        if (Player.isDead())
-        {
 
+        
+
+        scoreCounter.text = characterController2D.numberoflanding.ToString();
+     
+        if (isDead)
+        {
                 timer -= Time.deltaTime;
+           
  
                 if (timer <= 0)
                 {
                     GameOver();
-                }
-            
+                }   
         }
-
-
-
-
 
 
     }
@@ -62,8 +59,8 @@ public class scoremanager : MonoBehaviour {
         }
 
         elaspedTime += Time.deltaTime;
-        testing[0].transform.position = Vector3.Lerp(testing[0].transform.position, new Vector2(testing[0].transform.position.x, Screen.height / 2f), elaspedTime);
-        testing[1].transform.position = Vector3.Lerp(testing[1].transform.position, new Vector2(testing[1].transform.position.x, Screen.height / 1.25f), elaspedTime);
+        gameoverUI[0].transform.position = Vector3.Lerp(gameoverUI[0].transform.position, new Vector2(gameoverUI[0].transform.position.x, Screen.height / 2f), elaspedTime);
+        gameoverUI[1].transform.position = Vector3.Lerp(gameoverUI[1].transform.position, new Vector2(gameoverUI[1].transform.position.x, Screen.height / 1.25f), elaspedTime);
 
     }
 }

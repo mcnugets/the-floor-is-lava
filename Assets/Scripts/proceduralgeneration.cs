@@ -203,7 +203,7 @@ public class proceduralgeneration : MonoBehaviour
     {
       
         
-        while (!Player.isDead())
+        while (!scoremanager.isDead)
         {
 
 
@@ -267,7 +267,7 @@ public class proceduralgeneration : MonoBehaviour
     {
         
      
-        while (!Player.isDead() )
+        while (!scoremanager.isDead)
 
         {
 

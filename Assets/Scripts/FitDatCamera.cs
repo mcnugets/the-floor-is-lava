@@ -219,7 +219,7 @@ public class FitDatCamera : MonoBehaviour {
         if (gamestarted)
         {
             //check if player is dead
-            if (!Player.isDead())
+            if (!scoremanager.isDead)
             {
                 if (!instruction.gameObject.activeInHierarchy)
                 {

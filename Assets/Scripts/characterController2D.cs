@@ -32,10 +32,11 @@ public class characterController2D : MonoBehaviour {
 
 
 
+
    [HideInInspector] public float jumpTimeCounter;
     public float JumpTime;
     public bool isJumping = false;
-    public static bool isdead;
+   
     private List<Collider2D> listofColliders; 
 
     public UnityEvent OnLandEvent;
@@ -54,7 +55,7 @@ public class characterController2D : MonoBehaviour {
 
       
         topColumn = false;
-        isdead = false;
+       
     }
 	
 	// Update is called once per frame
@@ -64,16 +65,13 @@ public class characterController2D : MonoBehaviour {
 
         hitsSurface();
 
-        if (isdead)
-        {
-            print("IS DEAD");
-        }
-        Debug.Log("NUMBER OF LANDING------->" + numberoflanding);
+       
 
 
-      
 
-         if (islanded() == true)
+
+
+        if (islanded() == true)
         {
             OnLandEvent.Invoke();
 
@@ -120,58 +118,52 @@ public class characterController2D : MonoBehaviour {
     }
 
 
-   /* private enum hitSurface { None, Top };
+    /* private enum hitSurface { None, Top };
 
-    private hitSurface hittopSurface(GameObject Object, GameObject objecthit)
-    {
-        hitSurface hitDirection = hitSurface.None;
-        Vector2 direction = Object.transform.position - objecthit.transform.position;
+     private hitSurface hittopSurface(GameObject Object, GameObject objecthit)
+     {
+         hitSurface hitDirection = hitSurface.None;
+         Vector2 direction = Object.transform.position - objecthit.transform.position;
 
-        Ray2D myray2Dy = new Ray2D(objecthit.transform.position, Vector2.up);
-        RaycastHit2D myRayHit = Physics2D.Raycast(myray2Dy.origin, myray2Dy.direction);
-        if (myRayHit.collider != null)
-        {
-            topColumn = true;
-        }
-        else
-        {
-            topColumn = false;
-        }
-        /*  RaycastHit myRayHit;
-         Vector3 direction = Object.transform.position - objecthit.transform.position;
-         
-         if (Physics.Raycast(myray, out myRayHit))
+         Ray2D myray2Dy = new Ray2D(objecthit.transform.position, Vector2.up);
+         RaycastHit2D myRayHit = Physics2D.Raycast(myray2Dy.origin, myray2Dy.direction);
+         if (myRayHit.collider != null)
          {
-
-             if (myRayHit.collider != null)
-             {
-
-                 Vector3 MyNormal = myRayHit.normal;
-                 MyNormal = myRayHit.transform.TransformDirection(MyNormal);
-
-                 if (MyNormal == myRayHit.transform.up) { hitDirection = hitSurface.Top; topColumn = true; Debug.Log("TOP"); }
-
-
-             }
+             topColumn = true;
          }
-           
-        return hitDirection;
-      
-    }*/
+         else
+         {
+             topColumn = false;
+         }
+         /*  RaycastHit myRayHit;
+          Vector3 direction = Object.transform.position - objecthit.transform.position;
 
-  
+          if (Physics.Raycast(myray, out myRayHit))
+          {
 
-    public static int numbahoflandings()
-    {
-        return numberoflanding++;
-    }
+              if (myRayHit.collider != null)
+              {
 
-   
+                  Vector3 MyNormal = myRayHit.normal;
+                  MyNormal = myRayHit.transform.TransformDirection(MyNormal);
+
+                  if (MyNormal == myRayHit.transform.up) { hitDirection = hitSurface.Top; topColumn = true; Debug.Log("TOP"); }
+
+
+              }
+          }
+
+         return hitDirection;
+
+     }*/
+
+
     void OnTriggerEnter2D(Collider2D col)
     {
-          if (col.tag == "lava")
+        if (col.tag == "lava")
         {
-            isdead = true;
+            scoremanager.isDead = true;
+
             Destroy(gameObject);
             // Physics2D.IgnoreCollision(lavaFloor.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
 
@@ -181,7 +173,7 @@ public class characterController2D : MonoBehaviour {
     {
         if (col.tag == "lava")
         {
-            isdead = false;
+      //      isdead = false;
             
         }
     }

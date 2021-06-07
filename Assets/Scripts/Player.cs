@@ -35,18 +35,7 @@ public class Player : MonoBehaviour {
 
     }
 
-    public static bool isDead()
-    {
 
-        if (characterController2D.isdead)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 
 

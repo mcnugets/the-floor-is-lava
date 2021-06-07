@@ -215,7 +215,7 @@ public class FitDatCamera : MonoBehaviour {
 
 
 
-
+      
         if (gamestarted)
         {
             //check if player is dead

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
 
         // rb = GetComponent<Rigidbody2D>();
 
-
+        Physics2D.gravity = Physics2D.gravity * 1.5f;
         toJump = false;
 
     }
@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
         {
             jump.SetBool("isJumping", true);
             jump.Play("jump", 0, 0.5f);
+       
         }
     }
 

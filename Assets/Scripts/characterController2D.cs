@@ -162,8 +162,8 @@ public class characterController2D : MonoBehaviour {
     {
         if (col.tag == "lava")
         {
-            scoremanager.isDead = true;
 
+            scoremanager.isDead = true;
             Destroy(gameObject);
             // Physics2D.IgnoreCollision(lavaFloor.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
 

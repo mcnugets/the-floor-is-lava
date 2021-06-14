@@ -7,30 +7,29 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 
-
+   
 
     public Animator jump;
     public static bool toJump;
     public float suka = 5.0f;
     public characterController2D controller;
+    private float time = 0;
 
-  //  public GameObject differeence;
+    public static bool isDead 
+    {
+        get;set;
+    }
+    public static long score
+    {
+        get;set;
+    }
+    
 
-
-    private bool isinthelava = false;
-    int numberofjumps = 0;
-
-
-
-
-
-
-    // Use this for initialization
     void Start() {
 
-        // rb = GetComponent<Rigidbody2D>();
+  
 
-        Physics2D.gravity = Physics2D.gravity * 1.5f;
+        isDead = false;
         toJump = false;
 
     }
@@ -44,13 +43,13 @@ public class Player : MonoBehaviour {
     {
         if (FitDatCamera.gamestarted)
         {
-
+          
 
             if (FitDatCamera.tutorialdeact)
             {
                 //touch screen contorlls
                 controls();
-             
+                distanceScore();
 
             }
 
@@ -59,11 +58,21 @@ public class Player : MonoBehaviour {
 
         }
     }
-    
-        
+    public void distanceScore() 
+    {
+        Debug.Log("SCORE----> " + score);
+        Debug.Log("time " + time);
+        time+=Time.deltaTime*2f;
+        if (time >= 1)
+        {
+            score++;
+            time = 0;
+        }
 
-    
 
+       
+    }
+ 
     void controls()
     {
         if (Input.GetMouseButtonDown(0))
@@ -75,7 +84,7 @@ public class Player : MonoBehaviour {
             toJump = true;
             jump.SetBool("isJumping", true);
             
-            numberofjumps++;
+         
             
 
         }
@@ -118,8 +127,26 @@ public class Player : MonoBehaviour {
      //   Debug.Log("KASJJHDKSHDF");
     }
 
-   
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "lava")
+        {
+
+            isDead = true;
+            Destroy(gameObject);
 
 
-   
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "lava")
+        {
+            //      isdead = false;
+
+        }
+    }
+
+
+
 }

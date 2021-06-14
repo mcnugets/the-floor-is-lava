@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class scoremanager : MonoBehaviour {
 
     private static int lastscorerecorded;
-    public static bool isDead;
+
 
     public Text scoreCounter;
     public Text highestScore;
@@ -18,11 +18,11 @@ public class scoremanager : MonoBehaviour {
     float timer = 1f;
     public static bool gameover;
     
-
+    
 	// Use this for initialization
 	void Start () {
         gameover = false;
-        isDead = false;
+       
 
     }
 
@@ -32,9 +32,10 @@ public class scoremanager : MonoBehaviour {
 
         
 
-        scoreCounter.text = characterController2D.numberoflanding.ToString();
+        scoreCounter.text = Player.score.ToString();
+        
      
-        if (isDead)
+        if (Player.isDead)
         {
                 timer -= Time.deltaTime;
            
@@ -50,8 +51,9 @@ public class scoremanager : MonoBehaviour {
     void GameOver()
     {
         gameover = true;
-       
-        lastscorerecorded = characterController2D.numberoflanding;
+
+        GooglePlayManager.scoreUpdate(GPGSIds.leaderboard_score, Player.score);
+        Player.score = 0;
         highestScore.text = lastscorerecorded.ToString();
         for (int y = 0; y < gameoverUI.Count; y++)
         {
@@ -61,6 +63,6 @@ public class scoremanager : MonoBehaviour {
         elaspedTime += Time.deltaTime;
         gameoverUI[0].transform.position = Vector3.Lerp(gameoverUI[0].transform.position, new Vector2(gameoverUI[0].transform.position.x, Screen.height / 2f), elaspedTime);
         gameoverUI[1].transform.position = Vector3.Lerp(gameoverUI[1].transform.position, new Vector2(gameoverUI[1].transform.position.x, Screen.height / 1.25f), elaspedTime);
-
+       
     }
 }

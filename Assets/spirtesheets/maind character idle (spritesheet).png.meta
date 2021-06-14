@@ -20,6 +20,12 @@ TextureImporter:
   - first:
       213: 21300010
     second: maind character idle (spritesheet)_5
+  - first:
+      213: 295588148831295202
+    second: maind character idle (spritesheet)_6
+  - first:
+      213: -2436756158191235987
+    second: maind character idle (spritesheet)_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -122,10 +128,10 @@ TextureImporter:
       name: maind character idle (spritesheet)_0
       rect:
         serializedVersion: 2
-        x: 14
+        x: 46
         y: 0
-        width: 73
-        height: 92
+        width: 41
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,10 +149,10 @@ TextureImporter:
       name: maind character idle (spritesheet)_1
       rect:
         serializedVersion: 2
-        x: 115
+        x: 146
         y: 0
-        width: 72
-        height: 91
+        width: 41
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,10 +170,10 @@ TextureImporter:
       name: maind character idle (spritesheet)_2
       rect:
         serializedVersion: 2
-        x: 213
+        x: 246
         y: 0
-        width: 74
-        height: 90
+        width: 41
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,10 +191,10 @@ TextureImporter:
       name: maind character idle (spritesheet)_3
       rect:
         serializedVersion: 2
-        x: 313
+        x: 346
         y: 0
-        width: 74
-        height: 91
+        width: 41
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,10 +212,10 @@ TextureImporter:
       name: maind character idle (spritesheet)_4
       rect:
         serializedVersion: 2
-        x: 413
+        x: 446
         y: 0
-        width: 74
-        height: 93
+        width: 41
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,9 +233,9 @@ TextureImporter:
       name: maind character idle (spritesheet)_5
       rect:
         serializedVersion: 2
-        x: 513
+        x: 546
         y: 0
-        width: 74
+        width: 41
         height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

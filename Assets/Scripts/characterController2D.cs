@@ -25,8 +25,7 @@ public class characterController2D : MonoBehaviour {
     Text findtext;
 
     private bool isontheground;
-    
-    public static int numberoflanding;
+
     public bool isFalling = false;
     public GameObject lavaFloor;
 
@@ -49,7 +48,7 @@ public class characterController2D : MonoBehaviour {
 
 
         listofColliders = new List<Collider2D>();
-        numberoflanding = 0;
+        
         isontheground = false;
         
 
@@ -118,65 +117,8 @@ public class characterController2D : MonoBehaviour {
     }
 
 
-    /* private enum hitSurface { None, Top };
 
-     private hitSurface hittopSurface(GameObject Object, GameObject objecthit)
-     {
-         hitSurface hitDirection = hitSurface.None;
-         Vector2 direction = Object.transform.position - objecthit.transform.position;
-
-         Ray2D myray2Dy = new Ray2D(objecthit.transform.position, Vector2.up);
-         RaycastHit2D myRayHit = Physics2D.Raycast(myray2Dy.origin, myray2Dy.direction);
-         if (myRayHit.collider != null)
-         {
-             topColumn = true;
-         }
-         else
-         {
-             topColumn = false;
-         }
-         /*  RaycastHit myRayHit;
-          Vector3 direction = Object.transform.position - objecthit.transform.position;
-
-          if (Physics.Raycast(myray, out myRayHit))
-          {
-
-              if (myRayHit.collider != null)
-              {
-
-                  Vector3 MyNormal = myRayHit.normal;
-                  MyNormal = myRayHit.transform.TransformDirection(MyNormal);
-
-                  if (MyNormal == myRayHit.transform.up) { hitDirection = hitSurface.Top; topColumn = true; Debug.Log("TOP"); }
-
-
-              }
-          }
-
-         return hitDirection;
-
-     }*/
-
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "lava")
-        {
-
-            scoremanager.isDead = true;
-            Destroy(gameObject);
-            // Physics2D.IgnoreCollision(lavaFloor.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D>());
-
-        }
-    }
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.tag == "lava")
-        {
-      //      isdead = false;
-            
-        }
-    }
+   
     void OnCollisionEnter2D(Collision2D col)
     {
 
@@ -186,7 +128,7 @@ public class characterController2D : MonoBehaviour {
 
             if (!listofColliders.Contains(col.collider))
             {
-                numberoflanding++;
+               
                 audioManager.scoreAudioSource.Play();
                 listofColliders.Add(col.collider);
             }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
+
+
 
 public class FitDatCamera : MonoBehaviour {
 
@@ -25,7 +25,7 @@ public class FitDatCamera : MonoBehaviour {
     public static bool tutorialdeact;
 
     private scoremanager sm;
-    public GameObject leaderboardButton;
+    
   
 
     public  Image darkscreen;
@@ -73,77 +73,23 @@ public class FitDatCamera : MonoBehaviour {
 
         //google play service code
 
-        //  ADD THIS CODE BETWEEN THESE COMMENTS
+       
 
-        // Create client configuration
-        PlayGamesClientConfiguration config = new
-            PlayGamesClientConfiguration.Builder()
-            .Build();
+      
 
-        // Enable debugging output (recommended)
-        PlayGamesPlatform.DebugLogEnabled = true;
-
-        // Initialize and activate the platform
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.Activate();
+  
         // END THE CODE TO PASTE INTO START
 
-        SignInOnStart();
+     
 
         
 
     }
 
-    public void SignInCallback(bool success)
-    {
-        if (success)
-        {
-            Debug.Log("(Lollygagger) Signed in!");
-
-            // Change sign-in button text
-           // signInButtonText.text = "Sign out";
-
-            // Show the user's name
-            //   authStatus.text = "Signed in as: " + Social.localUser.userName;
-        }
-        else
-        {
-            Debug.Log("(Lollygagger) Sign-in failed...");
-
-            // Show failure message
-          //  signInButtonText.text = "Sign in";
-            //     authStatus.text = "Sign-in failed";
-        }
-    }
-    public void SignInOnStart()
-    {
-        if (!PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            // Sign in with Play Game Services, showing the consent dialog
-            // by setting the second parameter to isSilent=false.
-            PlayGamesPlatform.Instance.Authenticate(SignInCallback, false);
-        }
-        else 
-        {
-            PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);
-        }
-    }
 
 
 
-    public void ShowLeaderboards()
-    {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            PlayGamesPlatform.Instance.ShowLeaderboardUI();
-        }
-        else
-        {
-
-            Debug.Log("Cannot show leaderboard: not authenticated");
-            PlayGamesPlatform.Instance.Authenticate(SignInCallback, false);
-        }
-    }
+   
     public void onPress()
     {
 
@@ -210,16 +156,13 @@ public class FitDatCamera : MonoBehaviour {
     /// </summary>
     private void Initialized()
     {
-        leaderboardButton.SetActive(Social.localUser.authenticated);
-
-
-
+      
 
       
         if (gamestarted)
         {
             //check if player is dead
-            if (!scoremanager.isDead)
+            if (!Player.isDead)
             {
                 if (!instruction.gameObject.activeInHierarchy)
                 {
@@ -265,6 +208,8 @@ public class FitDatCamera : MonoBehaviour {
     // Update is called once per frame
     void Update () 
     {
+        
+      
         Initialized();
 
     }

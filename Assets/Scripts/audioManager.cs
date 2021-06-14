@@ -62,7 +62,7 @@ public class audioManager : MonoBehaviour {
 
 
         //if playe is dead play this sound
-        if (scoremanager.isDead && !isgameover)
+        if (Player.isDead && !isgameover)
         {
             if (!deathLavaAudioSource.isPlaying)
             {

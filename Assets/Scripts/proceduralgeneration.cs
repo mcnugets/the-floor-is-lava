@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+
 
 public class proceduralgeneration : MonoBehaviour
 {
+    #region veriable Initialization
 
+   
     public GameObject column;
 
     private GameObject startingPoint;
@@ -39,31 +41,40 @@ public class proceduralgeneration : MonoBehaviour
     public static List<GameObject> queue;
     
 
-    public GameObject[] background;
+    public GameObject[] environment;
    
     private static List<GameObject> bgWdith;
-    private static List<GameObject> background1;
-    private static List<GameObject> background2;
-    private static List<GameObject> lavabackground;
+    private static List<GameObject> environment1;
+    private static List<GameObject> environment2;
+    private static List<GameObject> lavaenvironment;
 
-    private float backgroundWidth;
-    private float secondbackgroundWdith;
+    private static List<GameObject> groundGen;
+    #region spriteWidth
+    private float environmentWidth;
+    private float secondenvironmentWdith;
     private float widthofthwlavasprite;
-    private int scrollBackground;
-    private int scrollRearBackground;
+    private float groundWdith;
+    #endregion
+
+    #region scrollEnvironment
+    private int scrollenvironment;
+    private int scrollRearenvironment;
     private int scrollLavaAnimation;
+    private int scrollGround;
+    #endregion
+
     private IEnumerator myCroutine;
     private IEnumerator myCroutine2;
     private IEnumerator myCroutine3;
-  
+    #endregion
     //  public Vector3 height;
 
     // Use this for initialization
     void Start()
     {
         waitforseconds = 0f;
-        backgroundWidth = 0;
-        secondbackgroundWdith = 0;
+        environmentWidth = 0;
+        secondenvironmentWdith = 0;
         widthofthwlavasprite = 0;
         columnHeight = new GameObject[9];
         reachRandomTime = 0;
@@ -77,8 +88,8 @@ public class proceduralgeneration : MonoBehaviour
 
 
         speed = 5f * Time.deltaTime;
-        scrollBackground = 0;
-        scrollRearBackground = 0;
+        scrollenvironment = 0;
+        scrollRearenvironment = 0;
         width = maincamera.transform.localScale;
 
 
@@ -88,9 +99,11 @@ public class proceduralgeneration : MonoBehaviour
 
         bgWdith = new List<GameObject>();
         queue = new List<GameObject>();
-        background1 = new List<GameObject>();
-        background2 = new List<GameObject>();
-        lavabackground = new List<GameObject>();
+        environment1 = new List<GameObject>();
+        environment2 = new List<GameObject>();
+
+
+        lavaenvironment = new List<GameObject>();
         timer = 2.25f;
 
         startingPoint = GameObject.FindGameObjectWithTag("starting point");
@@ -110,9 +123,12 @@ public class proceduralgeneration : MonoBehaviour
         // columnGenerator();
 
     }
+    #region start_coroutine_func
+
+    
     private void StartNewCroutine()
     {
-        myCroutine = backgroundgenerator();
+        myCroutine = environmentgenerator();
         StartCoroutine(myCroutine);
     }
     private void StartAnotherCroutine()
@@ -125,6 +141,10 @@ public class proceduralgeneration : MonoBehaviour
         myCroutine3 = Lavagenerator();
         StartCoroutine(myCroutine3);
     }
+    #endregion
+
+    #region environmentIEnumenator
+
 
     IEnumerator cameraUpdate()
     {
@@ -142,22 +162,22 @@ public class proceduralgeneration : MonoBehaviour
 
      
     }
-    IEnumerator backgroundgenerator()
+    IEnumerator environmentgenerator()
     {
       
       
 
        
 
-        while (scrollBackground < 2)
+        while (scrollenvironment < 2)
         {
 
 
-            GameObject instantiateBackground = Instantiate(background[0], new Vector2(background[0].transform.position.x, background[0].transform.position.y), Quaternion.identity);
-            background1.Add(instantiateBackground);
-            background1[scrollBackground].transform.position = new Vector2(backgroundWidth, background1[scrollBackground].transform.position.y);
+            GameObject instantiateenvironment = Instantiate(environment[0], new Vector2(environment[0].transform.position.x, environment[0].transform.position.y), Quaternion.identity);
+            environment1.Add(instantiateenvironment);
+            environment1[scrollenvironment].transform.position = new Vector2(environmentWidth, environment1[scrollenvironment].transform.position.y);
 
-            scrollBackground++;
+            scrollenvironment++;
 
 
             yield return null;
@@ -166,17 +186,18 @@ public class proceduralgeneration : MonoBehaviour
 
     }
 
+
     IEnumerator rearBackgound()
     {
-        while (scrollRearBackground < 2)
+        while (scrollRearenvironment < 2)
         {
 
 
-            GameObject instantiateBackground = Instantiate(background[1], new Vector2(background[1].transform.position.x, background[1].transform.position.y), Quaternion.identity);
-            background2.Add(instantiateBackground);
-            background2[scrollRearBackground].transform.position = new Vector2(secondbackgroundWdith, background2[scrollRearBackground].transform.position.y);
+            GameObject instantiateenvironment = Instantiate(environment[1], new Vector2(environment[1].transform.position.x, environment[1].transform.position.y), Quaternion.identity);
+            environment2.Add(instantiateenvironment);
+            environment2[scrollRearenvironment].transform.position = new Vector2(secondenvironmentWdith, environment2[scrollRearenvironment].transform.position.y);
 
-            scrollRearBackground++;
+            scrollRearenvironment++;
 
 
             yield return null;
@@ -189,12 +210,21 @@ public class proceduralgeneration : MonoBehaviour
     {
         while (scrollLavaAnimation < 3)
         {
-            GameObject instantiateLavaAnimation = Instantiate(background[2], new Vector2(background[2].transform.position.x, background[2].transform.position.y), Quaternion.identity);
-            lavabackground.Add(instantiateLavaAnimation);
-            lavabackground[scrollLavaAnimation].transform.position = new Vector2(widthofthwlavasprite, lavabackground[scrollLavaAnimation].transform.position.y);
+            GameObject instantiateLavaAnimation = Instantiate(environment[2], new Vector2(environment[2].transform.position.x, environment[2].transform.position.y), Quaternion.identity);
+            lavaenvironment.Add(instantiateLavaAnimation);
+            lavaenvironment[scrollLavaAnimation].transform.position = new Vector2(widthofthwlavasprite, lavaenvironment[scrollLavaAnimation].transform.position.y);
 
             scrollLavaAnimation++;
             yield return null;
+        }
+    }
+    IEnumerator groundGenerator()
+    {
+        while (scrollenvironment < 2)
+        {
+            GameObject instantiate = Instantiate(environment[3], new Vector2(environment[3].transform.position.x, environment[3].transform.position.y), Quaternion.identity);
+            groundGen.Add(instantiate);
+            groundGen[scrollenvironment].transform.position = new Vector2(secondenvironmentWdith, environment2[scrollRearenvironment].transform.position.y);
         }
     }
 
@@ -203,7 +233,7 @@ public class proceduralgeneration : MonoBehaviour
     {
       
         
-        while (!scoremanager.isDead)
+        while (!Player.isDead)
         {
 
 
@@ -260,14 +290,14 @@ public class proceduralgeneration : MonoBehaviour
             yield return null;
         }
     }
-  
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
         
      
-        while (!scoremanager.isDead)
+        while (!Player.isDead)
 
         {
 
@@ -275,21 +305,21 @@ public class proceduralgeneration : MonoBehaviour
             {
                 //LAVA SCROLLING 
 
-                for (int x = 0; x < lavabackground.Count; x++)
+                for (int x = 0; x < lavaenvironment.Count; x++)
                 {
-                    Vector2[] movingLava = new Vector2[lavabackground.Count];
-                    if (lavabackground[x].transform.position.x > leftSideofScreen)
+                    Vector2[] movingLava = new Vector2[lavaenvironment.Count];
+                    if (lavaenvironment[x].transform.position.x > leftSideofScreen)
                     {
                         lavaPos -= 0.5f;
                     }
 
-                    movingLava[x] = new Vector3(lavaPos, lavabackground[x].transform.position.y, lavabackground[x].transform.position.z);
-                    lavabackground[x].transform.position = Vector3.MoveTowards(lavabackground[x].transform.position, movingLava[x], 3f * Time.deltaTime);
+                    movingLava[x] = new Vector3(lavaPos, lavaenvironment[x].transform.position.y, lavaenvironment[x].transform.position.z);
+                    lavaenvironment[x].transform.position = Vector3.MoveTowards(lavaenvironment[x].transform.position, movingLava[x], 3f * Time.deltaTime);
 
-                    if (lavabackground[x].transform.position.x + lavabackground[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
+                    if (lavaenvironment[x].transform.position.x + lavaenvironment[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
                     {
-                        Destroy(lavabackground[x]);
-                        lavabackground.RemoveAt(x);
+                        Destroy(lavaenvironment[x]);
+                        lavaenvironment.RemoveAt(x);
                         scrollLavaAnimation = 2;
 
                         StopCoroutine(myCroutine3);
@@ -301,27 +331,27 @@ public class proceduralgeneration : MonoBehaviour
                 }
 
 
-                //FRONT BACKGROUND 
-                for (int x = 0; x < background1.Count; x++)
+                //FRONT environment 
+                for (int x = 0; x < environment1.Count; x++)
                 {
-                    Vector2[] movesuka2 = new Vector2[background1.Count];
-                    if (background1[x].transform.position.x > leftSideofScreen)
+                    Vector2[] movesuka2 = new Vector2[environment1.Count];
+                    if (environment1[x].transform.position.x > leftSideofScreen)
                     {
                         posBG -= 0.5f;
 
                     }
-                    Debug.Log(background1[x].GetComponent<SpriteRenderer>().bounds.size.x);
+                    Debug.Log(environment1[x].GetComponent<SpriteRenderer>().bounds.size.x);
 
-                    movesuka2[x] = new Vector3(posBG, background1[x].transform.position.y, background1[x].transform.position.z);
-                    background1[x].transform.position = Vector3.MoveTowards(background1[x].transform.position, movesuka2[x], 3f * Time.deltaTime);
+                    movesuka2[x] = new Vector3(posBG, environment1[x].transform.position.y, environment1[x].transform.position.z);
+                    environment1[x].transform.position = Vector3.MoveTowards(environment1[x].transform.position, movesuka2[x], 3f * Time.deltaTime);
 
-                    if (background1[x].transform.position.x + background1[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
+                    if (environment1[x].transform.position.x + environment1[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
                     {
 
 
-                        Destroy(background1[x]);
-                        background1.RemoveAt(x);
-                        scrollBackground = 1;
+                        Destroy(environment1[x]);
+                        environment1.RemoveAt(x);
+                        scrollenvironment = 1;
 
                         StopCoroutine(myCroutine);
                         StartNewCroutine();
@@ -330,27 +360,27 @@ public class proceduralgeneration : MonoBehaviour
                   
                 }
 
-                //REAR BACKGROUND
-                for (int x = 0; x < background2.Count; x++)
+                //REAR environment
+                for (int x = 0; x < environment2.Count; x++)
                 {
                     //CHECK THIS FOR LATER <<<<<<<<<<<<<<<
-                    Vector2[] movesuka3 = new Vector2[background2.Count];
-                    if (background2[x].transform.position.x > leftSideofScreen)
+                    Vector2[] movesuka3 = new Vector2[environment2.Count];
+                    if (environment2[x].transform.position.x > leftSideofScreen)
                     {
                         posBG2 -= 0.1f;
                     }
-                    Debug.Log(background2[x].GetComponent<SpriteRenderer>().bounds.size.x);
+                    Debug.Log(environment2[x].GetComponent<SpriteRenderer>().bounds.size.x);
 
-                    movesuka3[x] = new Vector3(posBG2, background2[x].transform.position.y, background2[x].transform.position.z);
-                    background2[x].transform.position = Vector3.MoveTowards(background2[x].transform.position, movesuka3[x], 2f * Time.deltaTime);
+                    movesuka3[x] = new Vector3(posBG2, environment2[x].transform.position.y, environment2[x].transform.position.z);
+                    environment2[x].transform.position = Vector3.MoveTowards(environment2[x].transform.position, movesuka3[x], 2f * Time.deltaTime);
 
-                    if (background2[x].transform.position.x + background2[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
+                    if (environment2[x].transform.position.x + environment2[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
                     {
 
                             
-                        Destroy(background2[x]);
-                        background2.RemoveAt(x);
-                        scrollRearBackground = 1;
+                        Destroy(environment2[x]);
+                        environment2.RemoveAt(x);
+                        scrollRearenvironment = 1;
 
                         StopCoroutine(myCroutine2);
                         StartAnotherCroutine();
@@ -415,11 +445,11 @@ public class proceduralgeneration : MonoBehaviour
                 }
 
             }
-            backgroundWidth = background1[scrollBackground - 1].transform.position.x + background1[scrollBackground - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            environmentWidth = environment1[scrollenvironment - 1].transform.position.x + environment1[scrollenvironment - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
-            secondbackgroundWdith = background2[scrollRearBackground - 1].transform.position.x + background2[scrollRearBackground - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            secondenvironmentWdith = environment2[scrollRearenvironment - 1].transform.position.x + environment2[scrollRearenvironment - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
-            widthofthwlavasprite = lavabackground[scrollLavaAnimation - 1].transform.position.x + lavabackground[scrollLavaAnimation - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            widthofthwlavasprite = lavaenvironment[scrollLavaAnimation - 1].transform.position.x + lavaenvironment[scrollLavaAnimation - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
           
 

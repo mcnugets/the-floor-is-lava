@@ -1,71 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 
 public class proceduralgeneration : MonoBehaviour
 {
     #region veriable Initialization
 
-   
+    #region Mono
     public GameObject column;
-
     private GameObject startingPoint;
-
+    private static GameObject[] columnHeight;
+    public GameObject prefabCopy;
+    private BoxCollider2D columnCollider;
     private Vector3 movefrom;
     private Vector3 moveto;
-    private float speed;
-    private float pos;
-
-    private float posBG;
-    private float posBG2;
-    private float lavaPos;
     public Camera maincamera;
     public Vector2 width;
+    #endregion
+
+    #region floats
+    private float environmentWidth;
+    private float secondenvironmentWdith;
+    private float widthofthwlavasprite;
+    private float groundWdith;
 
     float camerawidth;
     float cameraHeight;
 
     float rigthSideofScreen;
     float leftSideofScreen;
-    
+
     float timer;
     private float randomHeight;
     private float getTheOffset;
     private float waitforseconds;
     private static float reachRandomTime;
 
-    private static GameObject[] columnHeight;
-    public GameObject prefabCopy;
-    private BoxCollider2D columnCollider;
-    public static List<GameObject> queue;
-    
+    private float speed;
+    private float pos;
+    #endregion
 
+    #region data sctructure 
+    private int[] index_to_gameObject;
     public GameObject[] environment;
-   
     private static List<GameObject> bgWdith;
-    private static List<GameObject> environment1;
-    private static List<GameObject> environment2;
+    private static List<GameObject> front_bg_list;
+    private static List<GameObject> rear_bg_list;
     private static List<GameObject> lavaenvironment;
-
+    public static List<GameObject> queue;
     private static List<GameObject> groundGen;
-    #region spriteWidth
-    private float environmentWidth;
-    private float secondenvironmentWdith;
-    private float widthofthwlavasprite;
-    private float groundWdith;
+    private float[] sprite_pos;
     #endregion
 
-    #region scrollEnvironment
-    private int scrollenvironment;
-    private int scrollRearenvironment;
-    private int scrollLavaAnimation;
-    private int scrollGround;
-    #endregion
-
+    #region IEnumerators
     private IEnumerator myCroutine;
     private IEnumerator myCroutine2;
     private IEnumerator myCroutine3;
+    private IEnumerator myCroutine4;
+    #endregion
+
+
     #endregion
     //  public Vector3 height;
 
@@ -78,8 +75,7 @@ public class proceduralgeneration : MonoBehaviour
         widthofthwlavasprite = 0;
         columnHeight = new GameObject[9];
         reachRandomTime = 0;
-
-
+    
         for (int x=0;x<columnHeight.Length; x++)
         {
             columnHeight[x] = prefabCopy;
@@ -88,21 +84,20 @@ public class proceduralgeneration : MonoBehaviour
 
 
         speed = 5f * Time.deltaTime;
-        scrollenvironment = 0;
-        scrollRearenvironment = 0;
+      
         width = maincamera.transform.localScale;
 
 
 
-        
 
 
+        sprite_pos = new float[4];
+        index_to_gameObject = new int[4];
         bgWdith = new List<GameObject>();
         queue = new List<GameObject>();
-        environment1 = new List<GameObject>();
-        environment2 = new List<GameObject>();
-
-
+        front_bg_list = new List<GameObject>();
+        rear_bg_list = new List<GameObject>();
+        groundGen = new List<GameObject>();
         lavaenvironment = new List<GameObject>();
         timer = 2.25f;
 
@@ -115,31 +110,35 @@ public class proceduralgeneration : MonoBehaviour
         //PROCEDURAL GENERATION COUROUTINE
 
 
-        StartCoroutine(columnGenerator());
-        StartNewCroutine();
-        StartAnotherCroutine();
+        StartFirstCoroutine();
+        StartSecondCourutine();
         StartThirdCroutine();
-     
-        // columnGenerator();
+        StartForthCoroutine();
+        columnGenerator();
 
     }
     #region start_coroutine_func
 
     
-    private void StartNewCroutine()
+    private void StartFirstCoroutine()
     {
-        myCroutine = environmentgenerator();
+        myCroutine = frontBackground(0);
         StartCoroutine(myCroutine);
     }
-    private void StartAnotherCroutine()
+    private void StartSecondCourutine()
     {
-        myCroutine2 = rearBackgound();
+        myCroutine2 = rearBackgound(1);
         StartCoroutine(myCroutine2);
     }
     private void StartThirdCroutine()
     {
-        myCroutine3 = Lavagenerator();
+        myCroutine3 = Lavagenerator(2);
         StartCoroutine(myCroutine3);
+    }
+    private void StartForthCoroutine() 
+    {
+        myCroutine4 = groundGenerator(3);
+        StartCoroutine(myCroutine4);
     }
     #endregion
 
@@ -162,23 +161,25 @@ public class proceduralgeneration : MonoBehaviour
 
      
     }
-    IEnumerator environmentgenerator()
+    /// <summary>
+    /// numerator for the front bakground sprite
+    /// </summary>
+    /// <param name="i"> index 0 </param>
+    /// <returns></returns>
+    IEnumerator frontBackground(int i)
     {
       
-      
 
-       
-
-        while (scrollenvironment < 2)
+        while (index_to_gameObject[i] < 2)
         {
 
 
-            GameObject instantiateenvironment = Instantiate(environment[0], new Vector2(environment[0].transform.position.x, environment[0].transform.position.y), Quaternion.identity);
-            environment1.Add(instantiateenvironment);
-            environment1[scrollenvironment].transform.position = new Vector2(environmentWidth, environment1[scrollenvironment].transform.position.y);
+            GameObject instantiateenvironment = Instantiate(environment[i], new Vector2(environment[i].transform.position.x, environment[i].transform.position.y), Quaternion.identity);
+            front_bg_list.Add(instantiateenvironment);
+            front_bg_list[index_to_gameObject[i]].transform.position = new Vector2(environmentWidth, front_bg_list[index_to_gameObject[i]].transform.position.y);
 
-            scrollenvironment++;
-
+            index_to_gameObject[i]++;
+            Debug.Log("INDEX TO THE SHIT==> " + index_to_gameObject[i]);
 
             yield return null;
         }
@@ -186,18 +187,22 @@ public class proceduralgeneration : MonoBehaviour
 
     }
 
-
-    IEnumerator rearBackgound()
+    /// <summary>
+    /// numerator for the rear bakground sprite
+    /// </summary>
+    /// <param name="i"> index 1 </param>
+    /// <returns></returns>
+    IEnumerator rearBackgound(int i)
     {
-        while (scrollRearenvironment < 2)
+        while (index_to_gameObject[i] < 2)
         {
 
 
-            GameObject instantiateenvironment = Instantiate(environment[1], new Vector2(environment[1].transform.position.x, environment[1].transform.position.y), Quaternion.identity);
-            environment2.Add(instantiateenvironment);
-            environment2[scrollRearenvironment].transform.position = new Vector2(secondenvironmentWdith, environment2[scrollRearenvironment].transform.position.y);
+            GameObject instantiateenvironment = Instantiate(environment[i], new Vector2(environment[i].transform.position.x, environment[i].transform.position.y), Quaternion.identity);
+            rear_bg_list.Add(instantiateenvironment);
+            rear_bg_list[index_to_gameObject[i]].transform.position = new Vector2(secondenvironmentWdith, rear_bg_list[index_to_gameObject[i]].transform.position.y);
 
-            scrollRearenvironment++;
+            index_to_gameObject[i]++;
 
 
             yield return null;
@@ -206,229 +211,216 @@ public class proceduralgeneration : MonoBehaviour
 
     // IENUMENATOR FOR A LAVA ANIMIATUIOINS
 
-    IEnumerator Lavagenerator()
-    {
-        while (scrollLavaAnimation < 3)
-        {
-            GameObject instantiateLavaAnimation = Instantiate(environment[2], new Vector2(environment[2].transform.position.x, environment[2].transform.position.y), Quaternion.identity);
-            lavaenvironment.Add(instantiateLavaAnimation);
-            lavaenvironment[scrollLavaAnimation].transform.position = new Vector2(widthofthwlavasprite, lavaenvironment[scrollLavaAnimation].transform.position.y);
+    /// <summary>
+    /// numerator for the lava sprite
+    /// </summary>
+    /// <param name="i"> index 2 </param>
+    /// <returns></returns>
 
-            scrollLavaAnimation++;
+    IEnumerator Lavagenerator(int i)
+    {
+        while (index_to_gameObject[i] < 3)
+        {
+            GameObject instantiateLavaAnimation = Instantiate(environment[i], new Vector2(environment[i].transform.position.x, environment[i].transform.position.y), Quaternion.identity);
+            lavaenvironment.Add(instantiateLavaAnimation);
+            lavaenvironment[index_to_gameObject[i]].transform.position = new Vector2(widthofthwlavasprite, lavaenvironment[index_to_gameObject[i]].transform.position.y);
+
+            index_to_gameObject[i]++;
             yield return null;
         }
     }
-    IEnumerator groundGenerator()
+
+
+    /// <summary>
+    /// numerator for the land sprite
+    /// </summary>
+    /// <param name="i"> index 3 </param>
+    /// <returns></returns>
+
+    IEnumerator groundGenerator(int i)
     {
-        while (scrollenvironment < 2)
+
+        while (index_to_gameObject[i] < 3)
         {
-            GameObject instantiate = Instantiate(environment[3], new Vector2(environment[3].transform.position.x, environment[3].transform.position.y), Quaternion.identity);
+            GameObject instantiate = Instantiate(environment[i], new Vector2(environment[i].transform.position.x, environment[i].transform.position.y), Quaternion.identity);
             groundGen.Add(instantiate);
-            groundGen[scrollenvironment].transform.position = new Vector2(secondenvironmentWdith, environment2[scrollRearenvironment].transform.position.y);
+            groundGen[index_to_gameObject[i]].transform.position = new Vector2(groundWdith, groundGen[index_to_gameObject[i]].transform.position.y);
+            index_to_gameObject[i]++;
+            yield return null;
         }
     }
 
     // IENUMENATOR FOR A COLUMN
     IEnumerator columnGenerator()
     {
-      
-        
+
+
         while (!Player.isDead)
         {
 
 
-
-          
-           
-
             if (FitDatCamera.wasScreenTapped)
             {
 
-                
-           
-
-              //  if (timer<=0)
-            //    {
-
-                    randomHeight = Mathf.Round(RandomNum(1f, 9f));
-                  
-                    // getTheOffset = randomHeight - 0.5f;
-
-
-
-                    GameObject instanceParent = Instantiate(column, new Vector2(rigthSideofScreen + 1.0f, column.transform.position.y), Quaternion.identity);
-                    columnCollider = instanceParent.GetComponent<BoxCollider2D>();
-                    for (int x = 0; x < randomHeight; x++)
-                    {
-
-                        getTheOffset = (randomHeight * 0.5f) - 0.5f;
-
-                      
-                        
-
-                        GameObject instanceChild = Instantiate(columnHeight[x], new Vector2(columnHeight[x].transform.localPosition.x, columnHeight[x].transform.localPosition.y), Quaternion.identity);
-
-                        instanceChild.transform.parent = instanceParent.transform;
-                        instanceChild.transform.localPosition = new Vector2(columnHeight[x].transform.localPosition.x, columnHeight[x].transform.localPosition.y + x);
-                        columnCollider.size = new Vector2(columnCollider.size.x, randomHeight);
-                        columnCollider.offset = new Vector2(columnCollider.offset.x, getTheOffset);
-                    }
-
-                    queue.Add(instanceParent);
+                randomHeight = Mathf.Round(RandomNum(1f, 9f));
 
 
 
 
-                //  }
+
+                GameObject instanceParent = Instantiate(column, new Vector2(rigthSideofScreen + 1.0f, column.transform.position.y), Quaternion.identity);
+                columnCollider = instanceParent.GetComponent<BoxCollider2D>();
+                for (int x = 0; x < randomHeight; x++)
+                {
+
+                    getTheOffset = (randomHeight * 0.5f) - 0.5f;
+
+
+
+
+                    GameObject instanceChild = Instantiate(columnHeight[x], new Vector2(columnHeight[x].transform.localPosition.x, columnHeight[x].transform.localPosition.y), Quaternion.identity);
+
+                    instanceChild.transform.parent = instanceParent.transform;
+                    instanceChild.transform.localPosition = new Vector2(columnHeight[x].transform.localPosition.x, columnHeight[x].transform.localPosition.y + x);
+                    columnCollider.size = new Vector2(columnCollider.size.x, randomHeight);
+                    columnCollider.offset = new Vector2(columnCollider.offset.x, getTheOffset);
+                }
+
+                queue.Add(instanceParent);
+
+
+
+
+
                 reachRandomTime = RandomNum(0.50f, 2.50f);
-                Debug.Log("REACH RANOMD TIME " + reachRandomTime);
                 yield return new WaitForSeconds(reachRandomTime);
 
 
             }
-            
+
             yield return null;
         }
     }
     #endregion
 
+/// <summary>
+/// makes scrolling animation using multiple sprites 
+/// </summary>
+/// <param name="scroll_sprite"> list of sprites</param>
+/// <param name="reset_i"> reset the animation for scrolling</param>
+/// <param name="index"> value that used to index element from list </param>
+/// <param name="scrollSpeed">sets the scroll speed</param>
+/// <param name="coroutine">numerator restarts as soon as sprite is out of the FOV</param>
+/// <param name="StartCoroutine"></param>
+    private void environment_manager(List<GameObject> scroll_sprite, int reset_i, int index,float scrollSpeed, IEnumerator coroutine, float speed, UnityAction StartCoroutine)
+    {
+        for (int x = 0; x < scroll_sprite.Count; x++)
+        {
+            Vector2[] movingLava = new Vector2[scroll_sprite.Count];
+            if (scroll_sprite[x].transform.position.x > leftSideofScreen)
+            {
+                sprite_pos[index] -= scrollSpeed;
+              
+            }
+
+            movingLava[x] = new Vector3(sprite_pos[index], scroll_sprite[x].transform.position.y, scroll_sprite[x].transform.position.z);
+            scroll_sprite[x].transform.position = Vector3.MoveTowards(scroll_sprite[x].transform.position, movingLava[x], speed * Time.deltaTime);
+            float sprite_size = scroll_sprite[x].transform.position.x + scroll_sprite[x].GetComponent<SpriteRenderer>().bounds.size.x / 2;
+            if (sprite_size < leftSideofScreen)
+            {
+                
+
+                Destroy(scroll_sprite[x]);
+                scroll_sprite.RemoveAt(x);
+                index_to_gameObject[index] = reset_i;
+                StopCoroutine(coroutine);
+                StartCoroutine();
+                sprite_pos[index] = 0;
+
+            }
+
+
+        }
+        
+    }
     // Update is called once per frame
     void Update()
     {
-        
-     
+        Debug.Log("moveing sprite -> " + sprite_pos[1]);
+
         while (!Player.isDead)
 
         {
 
             if (FitDatCamera.wasScreenTapped)
             {
+               
+
+                //FRONT BACKGROUND SCROLLING
+                environment_manager(front_bg_list, 1, 0, 0.5f, myCroutine, 3f, StartFirstCoroutine);
+
+                //REAR BACKGROUND SCROLLING
+                environment_manager(rear_bg_list, 1, 1, 0.1f, myCroutine2, 2f, StartSecondCourutine);
+
                 //LAVA SCROLLING 
+                environment_manager(lavaenvironment, 2, 2, 0.5f, myCroutine3, 3f, StartThirdCroutine);
 
-                for (int x = 0; x < lavaenvironment.Count; x++)
-                {
-                    Vector2[] movingLava = new Vector2[lavaenvironment.Count];
-                    if (lavaenvironment[x].transform.position.x > leftSideofScreen)
-                    {
-                        lavaPos -= 0.5f;
-                    }
+                //GROUND SCROLLLING    
+                environment_manager(groundGen, 2, 3, 0.5f, myCroutine4, 3f, StartForthCoroutine);
 
-                    movingLava[x] = new Vector3(lavaPos, lavaenvironment[x].transform.position.y, lavaenvironment[x].transform.position.z);
-                    lavaenvironment[x].transform.position = Vector3.MoveTowards(lavaenvironment[x].transform.position, movingLava[x], 3f * Time.deltaTime);
-
-                    if (lavaenvironment[x].transform.position.x + lavaenvironment[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
-                    {
-                        Destroy(lavaenvironment[x]);
-                        lavaenvironment.RemoveAt(x);
-                        scrollLavaAnimation = 2;
-
-                        StopCoroutine(myCroutine3);
-                        StartThirdCroutine();
-
-
-                    }
-
-                }
-
-
-                //FRONT environment 
-                for (int x = 0; x < environment1.Count; x++)
-                {
-                    Vector2[] movesuka2 = new Vector2[environment1.Count];
-                    if (environment1[x].transform.position.x > leftSideofScreen)
-                    {
-                        posBG -= 0.5f;
-
-                    }
-                    Debug.Log(environment1[x].GetComponent<SpriteRenderer>().bounds.size.x);
-
-                    movesuka2[x] = new Vector3(posBG, environment1[x].transform.position.y, environment1[x].transform.position.z);
-                    environment1[x].transform.position = Vector3.MoveTowards(environment1[x].transform.position, movesuka2[x], 3f * Time.deltaTime);
-
-                    if (environment1[x].transform.position.x + environment1[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
-                    {
-
-
-                        Destroy(environment1[x]);
-                        environment1.RemoveAt(x);
-                        scrollenvironment = 1;
-
-                        StopCoroutine(myCroutine);
-                        StartNewCroutine();
-
-                    }
-                  
-                }
-
-                //REAR environment
-                for (int x = 0; x < environment2.Count; x++)
-                {
-                    //CHECK THIS FOR LATER <<<<<<<<<<<<<<<
-                    Vector2[] movesuka3 = new Vector2[environment2.Count];
-                    if (environment2[x].transform.position.x > leftSideofScreen)
-                    {
-                        posBG2 -= 0.1f;
-                    }
-                    Debug.Log(environment2[x].GetComponent<SpriteRenderer>().bounds.size.x);
-
-                    movesuka3[x] = new Vector3(posBG2, environment2[x].transform.position.y, environment2[x].transform.position.z);
-                    environment2[x].transform.position = Vector3.MoveTowards(environment2[x].transform.position, movesuka3[x], 2f * Time.deltaTime);
-
-                    if (environment2[x].transform.position.x + environment2[x].GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
-                    {
-
-                            
-                        Destroy(environment2[x]);
-                        environment2.RemoveAt(x);
-                        scrollRearenvironment = 1;
-
-                        StopCoroutine(myCroutine2);
-                        StartAnotherCroutine();
-
-                    }
-
-                }
+              
 
 
 
                 //COLUMNS
-                for (int x = 0; x < queue.Count; x++)
-                {
+                /*   for (int x = 0; x < queue.Count; x++)
+                   {
 
-                    Vector3[] movesuka = new Vector3[queue.Count];
-                    // Debug.Log(leftSideofScreen);
-                    if (queue[x].transform.position.x > leftSideofScreen)
+                       Vector3[] move_column = new Vector3[queue.Count];
+                       // Debug.Log(leftSideofScreen);
+                       if (queue[x].transform.position.x > leftSideofScreen)
+                       {
+
+                           Vector3 screenCneter = maincamera.WorldToScreenPoint(queue[x].transform.position);
+
+                           pos -= 0.5f;
+
+
+                       }
+                       //Debug.Log(x);
+                       print("STARRTING POINT POSITION--> " + pos);
+
+                       move_column[x] = new Vector3(pos, queue[x].transform.position.y, queue[x].transform.position.z);
+                       queue[x].transform.position = Vector3.MoveTowards(queue[x].transform.position, move_column[x], 3f * Time.deltaTime);
+
+                       // queue[x].transform.eulerAngles = new Vector3(queue[x].transform.eulerAngles.x, queue[x].transform.eulerAngles.y, queue[x].transform.eulerAngles.z);
+                       // Debug.Log(queue[x].transform.eulerAngles.z );
+
+
+                       if (queue[x].transform.position.x + 1f < leftSideofScreen || queue[x].transform.eulerAngles.z > 45.0f && queue[x].transform.eulerAngles.z < 315.0f)
+                       {
+
+
+                           Destroy(queue[x]);
+                           queue.RemoveAt(x);
+
+
+                       }
+
+
+                   }*/
+
+                if (startingPoint != null)
+                {
+                    if (startingPoint.transform.position.x > leftSideofScreen)
                     {
 
-                        Vector3 screenCneter = maincamera.WorldToScreenPoint(queue[x].transform.position);
+
 
                         pos -= 0.5f;
 
 
                     }
-                    //Debug.Log(x);
-                    movesuka[x] = new Vector3(pos, queue[x].transform.position.y, queue[x].transform.position.z);
-                    queue[x].transform.position = Vector3.MoveTowards(queue[x].transform.position, movesuka[x], 3f * Time.deltaTime);
-
-                   // queue[x].transform.eulerAngles = new Vector3(queue[x].transform.eulerAngles.x, queue[x].transform.eulerAngles.y, queue[x].transform.eulerAngles.z);
-                   // Debug.Log(queue[x].transform.eulerAngles.z );
-                 
-
-                    if (queue[x].transform.position.x + 1f < leftSideofScreen || queue[x].transform.eulerAngles.z > 45.0f && queue[x].transform.eulerAngles.z < 315.0f)
-                    {
-
-
-                        Destroy(queue[x]);
-                        queue.RemoveAt(x);
-
-
-                    }
-                   
-
-                }
-
-                if (startingPoint != null)
-                {
 
                     if (startingPoint.transform.position.x + startingPoint.GetComponent<SpriteRenderer>().bounds.size.x / 2 < leftSideofScreen)
                     {
@@ -437,7 +429,6 @@ public class proceduralgeneration : MonoBehaviour
                     }
                     startingPoint.transform.position = Vector3.MoveTowards(startingPoint.transform.position, new Vector3(pos, startingPoint.transform.position.y, startingPoint.transform.position.z), 3f * Time.deltaTime);
 
-
                 }
                 else
                 {
@@ -445,13 +436,15 @@ public class proceduralgeneration : MonoBehaviour
                 }
 
             }
-            environmentWidth = environment1[scrollenvironment - 1].transform.position.x + environment1[scrollenvironment - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            environmentWidth = front_bg_list[index_to_gameObject[0] - 1].transform.position.x + front_bg_list[index_to_gameObject[0] - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
-            secondenvironmentWdith = environment2[scrollRearenvironment - 1].transform.position.x + environment2[scrollRearenvironment - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            secondenvironmentWdith = rear_bg_list[index_to_gameObject[1] - 1].transform.position.x + rear_bg_list[index_to_gameObject[1] - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
-            widthofthwlavasprite = lavaenvironment[scrollLavaAnimation - 1].transform.position.x + lavaenvironment[scrollLavaAnimation - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+            widthofthwlavasprite = lavaenvironment[index_to_gameObject[2] - 1].transform.position.x + lavaenvironment[index_to_gameObject[2] - 1].GetComponent<SpriteRenderer>().bounds.size.x;
 
-          
+            groundWdith = groundGen[index_to_gameObject[3] - 1].transform.position.x + groundGen[index_to_gameObject[3] - 1].GetComponent<SpriteRenderer>().bounds.size.x;
+
+
 
             break;
         }
@@ -479,7 +472,8 @@ public class proceduralgeneration : MonoBehaviour
     }
     public float RandomNum(float min, float max)
     {
-        float value = Random.Range(min, max);
+        float value = UnityEngine.Random.Range(min, max);
+        
         
         return value;
 

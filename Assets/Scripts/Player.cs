@@ -60,8 +60,7 @@ public class Player : MonoBehaviour {
     }
     public void distanceScore() 
     {
-        Debug.Log("SCORE----> " + score);
-        Debug.Log("time " + time);
+    
         time+=Time.deltaTime*2f;
         if (time >= 1)
         {

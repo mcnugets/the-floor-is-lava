@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 773190233}
-  jumpForce: 80
+  jumpForce: 70
   Topsurface:
     serializedVersion: 2
     m_Bits: 512
@@ -493,7 +493,7 @@ MonoBehaviour:
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1133,15 +1133,15 @@ RectTransform:
   m_GameObject: {fileID: 833360096}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999607, y: 0.99999607, z: 0.99999607}
+  m_LocalScale: {x: 0.17444792, y: 0.17444792, z: 0.17444792}
   m_Children: []
   m_Father: {fileID: 1027663085}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.36538345, y: 0.62}
-  m_AnchorMax: {x: 0.6364111, y: 0.78000003}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 177, y: 24.059998}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 97.78, y: 277.3}
+  m_SizeDelta: {x: 298.66492, y: -360.052}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &833360098
 MonoBehaviour:
@@ -1166,18 +1166,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b72f64e92290b014c83e3dc54a1a9397, type: 3}
-    m_FontSize: 52
+    m_FontSize: 190
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 8
-    m_MaxSize: 120
+    m_MaxSize: 190
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.9
-  m_Text: 0
+  m_Text: 000
 --- !u!222 &833360099
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2301,9 +2301,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1922134463}
+  - component: {fileID: 1922134464}
   m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
+  m_Name: treadmill
+  m_TagString: starting point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2316,12 +2317,38 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922134462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.61, y: -1.87, z: 0}
+  m_LocalPosition: {x: -1.99, y: -5.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1922134464
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922134462}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.19105887, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.3079114, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &2013088301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,7 +2760,12 @@ PrefabInstance:
     - target: {fileID: 8370503498581946289, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
         type: 3}
       propertyPath: m_Name
-      value: treadmill
+      value: land
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370503498581946289, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
+        type: 3}
+      propertyPath: m_TagString
+      value: land
       objectReference: {fileID: 0}
     - target: {fileID: 8370503498581946300, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
         type: 3}
@@ -2743,12 +2775,12 @@ PrefabInstance:
     - target: {fileID: 8370503498581946300, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.88
       objectReference: {fileID: 0}
     - target: {fileID: 8370503498581946300, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.58
+      value: -5.658
       objectReference: {fileID: 0}
     - target: {fileID: 8370503498581946300, guid: 8203f7202c4fd044c9bf1cc3ba000a07,
         type: 3}

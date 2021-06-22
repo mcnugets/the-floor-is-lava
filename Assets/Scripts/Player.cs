@@ -4,25 +4,39 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+
+[System.Serializable]
 public class Player : MonoBehaviour {
 
+    [System.Serializable]
+    public class Player_Details
+    {
+        [System.Serializable]
+        public struct Details
+        {
+            public string Name;
+            public string Date;
+            public long Score;
+        }
+        public Details player_details;
 
-   
+    }
 
-    public Animator jump;
-    public static bool toJump;
-    public float suka = 5.0f;
-    public characterController2D controller;
-    private float time = 0;
+  
+
+    [SerializeField]
+    private Animator jump;
+    [SerializeField]
+    private static bool toJump;
+    [SerializeField]
+    private characterController2D controller;
+    
 
     public static bool isDead 
     {
         get;set;
     }
-    public static long score
-    {
-        get;set;
-    }
+   
     
 
     void Start() {
@@ -49,7 +63,7 @@ public class Player : MonoBehaviour {
             {
                 //touch screen contorlls
                 controls();
-                distanceScore();
+                
 
             }
 
@@ -58,53 +72,42 @@ public class Player : MonoBehaviour {
 
         }
     }
-    public void distanceScore() 
-    {
-    
-        time+=Time.deltaTime*2f;
-        if (time >= 1)
-        {
-            score++;
-            time = 0;
-        }
-
-
-       
-    }
+ 
  
     void controls()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && controller.isLanded)
         {
-            if (controller.islanded())
-            {
-                audioManager.jumpingAudioSource.Play();
-            }
+
+
+
+            audioManager.jumpingAudioSource.Play();
+
             toJump = true;
             jump.SetBool("isJumping", true);
-            
-         
-            
+
+           
 
         }
+     
         if (Input.GetMouseButton(0) && controller.isJumping)
         {
+            
             if (controller.jumpTimeCounter > 0)
             {
                 controller.JumpForce();
                 controller.jumpTimeCounter -= Time.deltaTime;
                 jump.SetBool("isJumping", true);
+             
             }
-            else
-            {
-                controller.isJumping = false;
-            }
-
+           
         }
-        if (Input.GetMouseButtonUp(0))
+        else
         {
             controller.isJumping = false;
         }
+
+
 
         controller.Jump(toJump);
         toJump = false;
@@ -136,13 +139,14 @@ public class Player : MonoBehaviour {
 
 
         }
+       
     }
-    void OnTriggerExit2D(Collider2D col)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (col.tag == "lava")
+        if (collision.collider.tag == "parent of column")
         {
-            //      isdead = false;
-
+            isDead = true;
+            gameObject.SetActive(false);
         }
     }
 

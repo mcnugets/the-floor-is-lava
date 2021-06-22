@@ -35,10 +35,14 @@ public class characterController2D : MonoBehaviour {
    [HideInInspector] public float jumpTimeCounter;
     public float JumpTime;
     public bool isJumping = false;
-   
     private List<Collider2D> listofColliders; 
-
     public UnityEvent OnLandEvent;
+
+    public bool isLanded
+    {
+        get { return isontheground; }
+        set { isontheground = value; }
+    }
     // Use this for initialization
     void Start() {
 
@@ -64,13 +68,13 @@ public class characterController2D : MonoBehaviour {
 
         hitsSurface();
 
-       
+
+        print("IS LANDED STATE==> " + isLanded);
 
 
 
 
-
-        if (islanded() == true)
+        if (isLanded)
         {
             OnLandEvent.Invoke();
 
@@ -94,7 +98,7 @@ public class characterController2D : MonoBehaviour {
     }
     public void Jump(bool toJump)
     {
-        if (islanded() && toJump)
+        if (isLanded && toJump)
         {
                isJumping = true;
             jumpTimeCounter = JumpTime;
@@ -113,7 +117,7 @@ public class characterController2D : MonoBehaviour {
     private void hitsSurface()
     {
         topColumn = Physics2D.OverlapCircle(groundCheck.position, radius, Topsurface);
-        Debug.Log("CHECK " + topColumn);
+        
     }
 
 
@@ -123,55 +127,30 @@ public class characterController2D : MonoBehaviour {
     {
 
 
-        if (col.collider.tag == "parent of column" && topColumn)
+        if (col.collider.tag == "starting point")
         {
 
-            if (!listofColliders.Contains(col.collider))
-            {
-               
-                audioManager.scoreAudioSource.Play();
-                listofColliders.Add(col.collider);
-            }
-
-            Debug.Log("COLLDINNG");
-            isLandedsetter(true);
+          
+            isLanded = true;
 
             ground = air;
 
         }
 
-        else if (col.collider.tag == "starting point")
-        {
-            isLandedsetter(true);
-            // ground = air;
-        }
+      
        
     }
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.collider.tag == "parent of column")
-        {
-            isLandedsetter(false);
-            air += 1;
-        }
         
-        else if (col.collider.tag == "starting point")
+        if (col.collider.tag == "starting point")
         {
-            isLandedsetter(false);
+            isLanded = false;
             // ground = air;
         }
     }
 
-    public void isLandedsetter(bool isontheground)
-    {
-        this.isontheground = isontheground;
-    }
-
-    public bool islanded()
-    {
-        return isontheground;
-    }
-
+  
 
 
 }

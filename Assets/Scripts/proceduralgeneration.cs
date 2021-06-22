@@ -101,7 +101,7 @@ public class proceduralgeneration : MonoBehaviour
         lavaenvironment = new List<GameObject>();
         timer = 2.25f;
 
-        startingPoint = GameObject.FindGameObjectWithTag("starting point");
+        startingPoint = GameObject.FindGameObjectWithTag("land");
 
         //CAMERA COUROUTINE
         StartCoroutine(cameraUpdate());
@@ -114,7 +114,7 @@ public class proceduralgeneration : MonoBehaviour
         StartSecondCourutine();
         StartThirdCroutine();
         StartForthCoroutine();
-        columnGenerator();
+        StartCoroutine(columnGenerator());
 
     }
     #region start_coroutine_func
@@ -262,10 +262,7 @@ public class proceduralgeneration : MonoBehaviour
             if (FitDatCamera.wasScreenTapped)
             {
 
-                randomHeight = Mathf.Round(RandomNum(1f, 9f));
-
-
-
+                randomHeight = Mathf.Round(RandomNum(2f, 5f));
 
 
                 GameObject instanceParent = Instantiate(column, new Vector2(rigthSideofScreen + 1.0f, column.transform.position.y), Quaternion.identity);
@@ -292,7 +289,7 @@ public class proceduralgeneration : MonoBehaviour
 
 
 
-                reachRandomTime = RandomNum(0.50f, 2.50f);
+                reachRandomTime = RandomNum(1.50f, 3.50f);
                 yield return new WaitForSeconds(reachRandomTime);
 
 
@@ -346,7 +343,7 @@ public class proceduralgeneration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("moveing sprite -> " + sprite_pos[1]);
+      
 
         while (!Player.isDead)
 
@@ -373,7 +370,7 @@ public class proceduralgeneration : MonoBehaviour
 
 
                 //COLUMNS
-                /*   for (int x = 0; x < queue.Count; x++)
+                   for (int x = 0; x < queue.Count; x++)
                    {
 
                        Vector3[] move_column = new Vector3[queue.Count];
@@ -388,7 +385,7 @@ public class proceduralgeneration : MonoBehaviour
 
                        }
                        //Debug.Log(x);
-                       print("STARRTING POINT POSITION--> " + pos);
+                     
 
                        move_column[x] = new Vector3(pos, queue[x].transform.position.y, queue[x].transform.position.z);
                        queue[x].transform.position = Vector3.MoveTowards(queue[x].transform.position, move_column[x], 3f * Time.deltaTime);
@@ -408,7 +405,7 @@ public class proceduralgeneration : MonoBehaviour
                        }
 
 
-                   }*/
+                   }
 
                 if (startingPoint != null)
                 {

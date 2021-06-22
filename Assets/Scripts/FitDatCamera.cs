@@ -24,7 +24,7 @@ public class FitDatCamera : MonoBehaviour {
     public static bool gamestarted;
     public static bool tutorialdeact;
 
-    private scoremanager sm;
+    private GameObject scoreDetails;
     
   
 
@@ -41,8 +41,8 @@ public class FitDatCamera : MonoBehaviour {
     }
     void Start()
     {
-        sm = GameObject.Find("GameManager").GetComponent<scoremanager>();
-
+        scoreDetails = GameObject.Find("ScoreAndName");
+        scoreDetails.SetActive(false);
 
         StartCoroutine(fadethepanelaway());
         changetransparency = instruction.color;
@@ -126,14 +126,13 @@ public class FitDatCamera : MonoBehaviour {
         for (float x = 0; x < time; x +=Time.deltaTime)
         {
             changetransparency.a = Mathf.Lerp(startingcolor.a, finalcolor.a, Mathf.Min(1, x/time));
-          //  Debug.Log(changetransparency.a + " СУКА ПРОВЕРКА  ");
             instruction.color = changetransparency;
             yield return null;
         }
     }
     IEnumerator fadethepanelaway()
     {
-        float duration=0;
+      
         for(float y=0; y<1.0f; y += Time.deltaTime)
         {
             makeitfadeaway.a = Mathf.Lerp(fadeblackaway.a, finalstate.a, y*3.0f);
@@ -166,7 +165,8 @@ public class FitDatCamera : MonoBehaviour {
             {
                 if (!instruction.gameObject.activeInHierarchy)
                 {
-                    sm.scoreCounter.gameObject.SetActive(true);
+                    //  sm.scoreCounter.gameObject.SetActive(true);
+                    scoreDetails.SetActive(true);
 
                 }
 
@@ -174,7 +174,7 @@ public class FitDatCamera : MonoBehaviour {
             }
             else
             {
-                sm.scoreCounter.gameObject.SetActive(false);
+                scoreDetails.SetActive(false);
             }
 
 

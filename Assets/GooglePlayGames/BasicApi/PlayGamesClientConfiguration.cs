@@ -16,6 +16,7 @@
 
 #if UNITY_ANDROID
 
+
 namespace GooglePlayGames.BasicApi
 {
     using GooglePlayGames.BasicApi.Multiplayer;
@@ -31,6 +32,7 @@ namespace GooglePlayGames.BasicApi
     /// </summary>
     public struct PlayGamesClientConfiguration
     {
+        
         /// <summary>
         /// The default configuration.
         /// </summary>
@@ -435,7 +437,7 @@ namespace GooglePlayGames.BasicApi
 
         public override bool Equals(object obj)
         {
-            return this == (PlayGamesClientConfiguration) obj;
+            return this == (PlayGamesClientConfiguration)obj;
         }
     }
 }

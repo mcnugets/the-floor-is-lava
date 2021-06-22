@@ -22,15 +22,20 @@ public class Player : MonoBehaviour {
 
     }
 
-  
 
+    
     [SerializeField]
     private Animator jump;
     [SerializeField]
     private static bool toJump;
     [SerializeField]
     private characterController2D controller;
+    private float wait_time = 0;
     
+    public static long Score
+    {
+        get; set;
+    }
 
     public static bool isDead 
     {
@@ -63,7 +68,7 @@ public class Player : MonoBehaviour {
             {
                 //touch screen contorlls
                 controls();
-                
+                DistanceMade();
 
             }
 
@@ -72,8 +77,20 @@ public class Player : MonoBehaviour {
 
         }
     }
- 
- 
+    private void DistanceMade()
+    {
+
+        wait_time += Time.deltaTime * 2f;
+        if (wait_time >= 1)
+        {
+            Score++;
+            wait_time = 0;
+        }
+
+
+
+    }
+
     void controls()
     {
         if (Input.GetMouseButtonDown(0) && controller.isLanded)
